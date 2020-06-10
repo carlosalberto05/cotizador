@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Form from './src/components/Form';
 import Footer from './src/components/Footer';
+import ResultCalculation from './src/components/ResultCalculation';
 import colors from './src/utils/colors';
 
 YellowBox.ignoreWarnings(['Picker has been extracted']);
@@ -21,15 +22,14 @@ export default function App() {
   const [total, setTotal] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  console.log(total);
-
   const operation = () => {
+    resetError();
     if (!cantidad) {
-      console.log('Añade la cantidad qur quieres solicitar');
+      setErrorMessage('Añade la cantidad que quieres solicitar');
     } else if (!interest) {
-      console.log('Añade el interes del prestamo');
+      setErrorMessage('Añade el interes del prestamo');
     } else if (!months) {
-      console.log('Selecciona los meses a pagar');
+      setErrorMessage('Selecciona los meses a pagar');
     } else {
       const i = interest / 100;
       const fee = cantidad / ((1 - Math.pow(i + 1, -months)) / i);
@@ -38,6 +38,11 @@ export default function App() {
         totalPayable: (fee * months).toFixed(2),
       });
     }
+  };
+
+  const resetError = () => {
+    setErrorMessage('');
+    setTotal(null);
   };
 
   return (
@@ -53,9 +58,13 @@ export default function App() {
         />
       </SafeAreaView>
 
-      <View>
-        <Text>Resultado</Text>
-      </View>
+      <ResultCalculation
+        cantidad={cantidad}
+        interest={interest}
+        months={months}
+        total={total}
+        errorMessage={errorMessage}
+      />
 
       <Footer operation={operation} />
     </>
