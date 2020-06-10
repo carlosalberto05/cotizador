@@ -22,6 +22,14 @@ export default function App() {
   const [total, setTotal] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
+  useEffect(() => {
+    if (cantidad && interest && months) {
+      operation();
+    } else {
+      resetError();
+    }
+  }, [cantidad, interest, months]);
+
   const operation = () => {
     resetError();
     if (!cantidad) {
