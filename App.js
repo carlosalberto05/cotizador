@@ -99,3 +99,5 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
 });
+
+//Desarrollado por Carlos de Jesus Alberto Lira
